@@ -1,7 +1,7 @@
 class User < ActiveRecord::Base
   has_secure_password
   has_many :letters
-  has_many :recipients, through: :letters
+  has_many :recipients
 
   def slug
     self.username.gsub(/_/, '-').parameterize

@@ -3,6 +3,7 @@ class CreateRecipients < ActiveRecord::Migration
     create_table :recipients do |t|
       t.string :name
       t.string :address
+      t.integer :user_id
 
       t.timestamps null: false
     end

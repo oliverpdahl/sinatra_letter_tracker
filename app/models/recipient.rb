@@ -1,4 +1,4 @@
 class Recipient < ActiveRecord::Base
   has_many :letters
-  has_many :users, through: :letters
+  belongs_to :users
 end
