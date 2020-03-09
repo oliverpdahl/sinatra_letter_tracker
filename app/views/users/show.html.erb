@@ -1,3 +1,12 @@
 <h1>All Your Letters</h1>
 <ul>
+  <% @user.letters.each do |letter| %>
+    <li><bold><%= letter.recipient.name %></bold>
+      <ul>
+        <li>Notes: <%= letter.notes %></li>
+        <li><%= letter.sent? ? letter.date_sent.strftime("Sent on %A, %B %e, %Y") : "Not yet sent" %></li>
+        <li><%= letter.received? ? letter.date_received.strftime("Recieved on %A, %B %e, %Y") : "Not yet received" %></li>
+      </ul>
+    </li>
+  <% end %>
 <ul>

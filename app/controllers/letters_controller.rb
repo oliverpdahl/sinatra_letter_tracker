@@ -8,8 +8,8 @@ class LettersController < ApplicationController
       erb :"/letters/index.html"
     else
       #ask to login
-      redirect '/login'
       flash[:message] = "Must be loged in to view letters"
+      redirect '/login'
     end
   end
 
@@ -77,13 +77,13 @@ class LettersController < ApplicationController
 
   # DELETE: /letters/5/delete
   delete "/letters/:id/delete" do
-    letter = Letter.find(params[:id])
-    if logged_in? && current_user == letter.user
-      letter.delete
+    @letter = Letter.find(params[:id])
+    if logged_in? && current_user == @letter.user
+      @letter.delete
       redirect '/letters'
     else
       flash[:message] = "Can't delete other users letters"
-      redirect "/letters/#{letter.id}"
+      redirect "/letters/#{@letter.id}"
     end
   end
 end

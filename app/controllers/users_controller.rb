@@ -64,7 +64,15 @@ class UsersController < ApplicationController
   # GET: /users/5
   get "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
-    erb :"/users/show.html"
+    if logged_in? && current_user == @user
+      erb :"/users/show.html"
+    elsif logged_in?
+      flash[:message] = "You can only view letters associated with your account"
+      redirect "/users/#{current_user.slug}"
+    else
+      flash[:message] = "Must be loged in to view letters"
+      redirect '/login'
+    end
   end
 
   # # GET: /users/5/edit
