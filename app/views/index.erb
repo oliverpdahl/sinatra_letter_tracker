@@ -1,1 +1,16 @@
 <h1> Homepage </h1>
+<% if logged_in? %>
+<p>Hello <%= current_user.username %> <a href='/logout'>Log Out</a></p>
+<% else %>
+<a href='/login'>Log In</a>
+<a href='/signup'>Sign Up</a>
+<% end %>
+
+<h2>Time Line</h2>
+<ul>
+<% @letters.each do |letter| %>
+  <% if letter.sent? %>
+    <li><%= letter.user.username %> sent a letter! - <%= letter.date_sent.strftime("%m/%d/%Y") %></li>
+  <% end %>
+<% end %>
+</ul>

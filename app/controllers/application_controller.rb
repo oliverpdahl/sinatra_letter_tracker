@@ -13,6 +13,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
+    @letters = Letter.all
     erb :index
   end
 
