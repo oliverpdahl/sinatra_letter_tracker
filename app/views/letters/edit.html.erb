@@ -1,1 +1,9 @@
-<h1>Insert the form to edit an instance of your model here.</h1>
+<form action='/letters/<%= @letter.id %>' method="POST">
+  <input type="hidden" id="hidden" name="_method" value="PATCH">
+  Content:
+  <input type="text" name="content" id='content' value="<%= @letter.content%>"<br>
+  Edit Your Letter:
+
+  <input type="submit" name="submit" id="submit">
+
+</form>
