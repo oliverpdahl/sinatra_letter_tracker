@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   get "/signup" do
     if logged_in?
       flash[:message] = "Already logged in"
-      redirect "/users/#{user.slug}"
+      redirect "/users/#{current_user.slug}"
     else
       erb :"/users/new.html"
     end
@@ -18,7 +18,8 @@ class UsersController < ApplicationController
         redirect '/signup'
       else
         login(User.create(username: params[:username], password: params[:password])) #creates and logs in user
-        redirect "/users/#{current.slug}"
+        flash[:message] = "Successfuly signed up"
+        redirect "/users/#{current_user.slug}"
       end
     else
       flash[:message] = "Make sure that all the fields are filled"
@@ -39,10 +40,11 @@ class UsersController < ApplicationController
   # POST: /users
   post "/login" do
     if fields_filled?
-      user = User.find_by(username: params[:username])
-      if user && user.authenticate(params[:password])
-        login(user)
-        redirect "/users/#{user.slug}"
+      @user = User.find_by(username: params[:username])
+      if @user && @user.authenticate(params[:password])
+        login(@user)
+        flash[:message] = "Successfuly Logged in"
+        redirect "/users/#{@user.slug}"
       else
         flash[:message] = "Username password combination incorrect"
         redirect '/login'
