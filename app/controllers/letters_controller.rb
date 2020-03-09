@@ -5,7 +5,6 @@ class LettersController < ApplicationController
     if logged_in?
       #show tweets
       @all = current_user.letters
-      flash[:message] = "Welcome, #{current_user.username}"
       erb :"/letters/index.html"
     else
       #ask to login
