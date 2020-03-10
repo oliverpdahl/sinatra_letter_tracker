@@ -16,6 +16,7 @@ class LettersController < ApplicationController
   # GET: /letters/new
   get "/letters/new" do
     if logged_in?
+      @user = current_user
       erb :"/letters/new.html"
     else
       redirect '/login'

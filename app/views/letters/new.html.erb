@@ -1,8 +1,19 @@
 <form action='/letters' method="post">
-  Content:
-  <input type="text" name="notes" id='notes'><br>
-  Create Your Letter:
-
-  <input type="submit" name="submit" id="submit">
-
+  Create Your Letter:<br>
+  <h3>Existing recipient</h3>
+  <% @user.recipients.each do |recipient| %>
+    <input type='radio' name='letter[recipient_id][]' id='<%= recipient.id %>' value='<%= recipient.id %>'><%= recipient.name %></input><br>
+  <% end %>
+  <h3>New Recipient</h3>
+  <label for='recipient_name'>Recipient Name: </label>
+  <input type='type' id='recipient_name' name='recipient[name]'><br>
+  <label for='recipient_address'>Recipient Address: </label>
+  <input type='type' id='recipient_address' name='recipient[address]'>
+  <h3>Date Sent</h3>
+  <input type='date' id='date_sent' name='letter[date_sent]'>
+  <h3>Date Received</h3>
+  <input type='date' id='date_recieved' name='letter[date_recieved]'>
+  <h3>Notes: </h3>
+  <input type="textarea" name="notes" id='notes'><br><br>
+  <input type="submit" name="submit" id="submit" value='Create Letter'>
 </form>
