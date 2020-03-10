@@ -25,14 +25,19 @@ class LettersController < ApplicationController
 
   # POST: /letters
   post "/letters" do
-    if params[:content].empty? #UPDATE
-      flash[:message] = "Make sure fields are filled"
-      redirect '/letters/new'
-    else
-      @letter = letter.create() #update
-      #Add for create recipient
+    if recipient_filled?
+      @letter = Letter.create(params[:letter]) #update
+      if new_recipient?
+        @letter.recipient = Recipient.create(params[:recipient][:name], address: params[:recipient][:address])
+        current_user.recipients << @letter.recipient
+        @letter.save
+        current_user.save
+      end
       current_user.letters << @letter
       redirect "/letters/#{@letter.id}"
+    else
+      flash[:message] = "Make sure your letter has a recipient"
+      redirect '/letters/new'
     end
   end
 
@@ -77,14 +82,26 @@ class LettersController < ApplicationController
   end
 
   # DELETE: /letters/5/delete
-  delete "/letters/:id/delete" do
+  delete "/letters/:id/" do
     @letter = Letter.find(params[:id])
     if logged_in? && current_user == @letter.user
       @letter.delete
       redirect '/letters'
     else
       flash[:message] = "Can't delete other users letters"
-      redirect "/letters/#{@letter.id}"
+      redirect "/letters/"
+    end
+  end
+
+  helpers do
+    def recipient_filled?
+       exisiting_recipient? || new_recipient?
+    end
+    def exisiting_recipient?
+      !params[:letter][:recipient_id].empty?
+    end
+    def new_recipient?
+      !params[:recipient][:name].empty? && !params[:recipient][:address].empty?
     end
   end
 end

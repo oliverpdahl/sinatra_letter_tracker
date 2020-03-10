@@ -9,4 +9,12 @@ class Letter < ActiveRecord::Base
   def received?
     !!self.date_received
   end
+
+  def date_sent_string
+    sent? ? self.date_sent.strftime("Sent on %A, %B %e, %Y") : "Not yet sent"
+  end
+
+  def date_received_string
+    received? ? self.date_received.strftime("Recieved on %A, %B %e, %Y") : "Not yet received"
+  end
 end
