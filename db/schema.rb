@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20200309131153) do
   create_table "recipients", force: :cascade do |t|
     t.string   "name"
     t.string   "address"
+    t.integer  "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

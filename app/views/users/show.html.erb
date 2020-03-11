@@ -1,7 +1,7 @@
-<h1>All Your Letters</h1>
+<h1>Your Letters</h1>
 <ul>
   <% @user.letters.each do |letter| %>
-    <li><bold><%= letter.recipient.name %></bold>
+    <li><bold><a href='/letters/<%= letter.id %>'>Letter to <%= letter.recipient.name %></a></bold>
       <ul>
         <li>Notes: <%= letter.notes %></li>
         <li><%= letter.sent? ? letter.date_sent.strftime("Sent on %A, %B %e, %Y") : "Not yet sent" %></li>

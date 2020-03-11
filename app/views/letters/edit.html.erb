@@ -1,9 +1,29 @@
-<form action='/letters/<%= @letter.id %>' method="POST">
+<h1>Edit Letter</h1>
+<h2>Existing Information</h2>
+<ul>
+  <li>Sent to <%= @letter.recipient.name %> on <%= @letter.recipient.address %></li>
+  <li><%= @letter.date_sent_string %></li>
+  <li><%= @letter.date_received_string %></li>
+  <li>Notes: <%= @letter.notes %></li>
+</ul>
+<h2>New Information</h2>
+<form action='/letters/<%= @letter.id %>' method="post">
   <input type="hidden" id="hidden" name="_method" value="PATCH">
-  Content:
-  <input type="text" name="content" id='content' value="<%= @letter.content%>"<br>
-  Edit Your Letter:
-
-  <input type="submit" name="submit" id="submit">
-
+  Create Your Letter:<br>
+  <h3>Existing recipient</h3>
+  <% @user.recipients.each do |recipient| %>
+    <input type='radio' name='letter[recipient_id]' id='<%= recipient.id %>' value='<%= recipient.id %>' <%= 'checked' if @letter.recipient == recipient %>><%= recipient.name %></input><br>
+  <% end %>
+  <h3>New Recipient</h3>
+  <label for='recipient_name'>Recipient Name: </label>
+  <input type='type' id='recipient_name' name='recipient[name]'><br>
+  <label for='recipient_address'>Recipient Address: </label>
+  <input type='type' id='recipient_address' name='recipient[address]'>
+  <h3>Date Sent</h3>
+  <input type='date' id='date_sent' name='letter[date_sent]' value='<%= @letter.date_sent.strftime("%Y-%m-%d") if @letter.sent?%>'>
+  <h3>Date Received</h3>
+  <input type='date' id='date_received' name='letter[date_received]' value='<%= @letter.date_received.strftime("%Y-%m-%d") if @letter.received? %>'>
+  <h3>Notes: </h3>
+  <input type="textarea" name="letter[notes]" id='notes' value="<%= @letter.notes %>"><br><br>
+  <input type="submit" name="submit" id="submit" value='Edit Letter'>
 </form>

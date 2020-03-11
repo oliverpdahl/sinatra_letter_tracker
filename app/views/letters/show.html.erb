@@ -4,10 +4,10 @@
   <li><%= @letter.date_received_string %></li>
   <li>Notes: <%= @letter.notes %></li>
 </ul>
-<form action='/letters/<%= @letter.id %>' method="POST">
+<form action='/letters/<%= @letter.id %>/delete' method="POST">
   <input type="hidden" id="hidden" name="_method" value="DELETE">
   <input type='submit' id="Delete Letter" name="Delete Letter" value="Delete Letter">
 </form>
-<form action='/letters/<%= @letter.id %>/edit' method="POST">
+<form action='/letters/<%= @letter.id %>/edit' method="GET">
   <input type='submit' id="Edit Letter" name="Edit Letter" value="Edit Letter">
 </form>
