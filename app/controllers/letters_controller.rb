@@ -67,11 +67,11 @@ class LettersController < ApplicationController
 
   # PATCH: /letters/5
   post "/letters/:id/edit" do
-    if !!(@letter = Letter.find(params[:id])) && params[:content].empty? #UPDATE
+    if !!(@letter = Letter.find(params[:id]))
       if recipient_filled?
-        @letter = Letter.update(params[:letter]) #update
+        @letter.update(params[:letter])
         if new_recipient?
-          @letter.recipient = Recipient.create(params[:recipient][:name], address: params[:recipient][:address])
+          @letter.recipient = Recipient.create(name: params[:recipient][:name], address: params[:recipient][:address])
           current_user.recipients << @letter.recipient
           @letter.save
           current_user.save

@@ -7,7 +7,7 @@
   <li>Notes: <%= @letter.notes %></li>
 </ul>
 <h2>New Information</h2>
-<form action='/letters/<%= @letter.id %>' method="post">
+<form action='/letters/<%= @letter.id %>/edit' method="post">
   <input type="hidden" id="hidden" name="_method" value="PATCH">
   Create Your Letter:<br>
   <h3>Existing recipient</h3>
