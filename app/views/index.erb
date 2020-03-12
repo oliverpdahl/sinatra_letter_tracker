@@ -1,16 +1,16 @@
-<h1> Homepage </h1>
+<h1> Letter Tracker</h1>
 <% if logged_in? %>
-<p>Hello <%= current_user.username %> <a href='/logout'>Log Out</a></p>
+<p><a href='/users/<%= current_user.slug%>'>Your Letters</a> | <a href='/letters/new'>New Letter</a> | <a href='/logout'>Log Out</a></p>
+<p>Hello <%= current_user.username %></p>
 <% else %>
-<a href='/login'>Log In</a>
-<a href='/signup'>Sign Up</a>
+<p><a href='/login'>Log In</a> | <a href='/signup'>Sign Up</a></p>
 <% end %>
 
-<h2>Time Line</h2>
+<h2>Timeline</h2>
 <ul>
 <% @letters.each do |letter| %>
   <% if letter.sent? %>
-    <li><%= letter.user.username %> sent a letter! - <%= letter.date_sent.strftime("%m/%d/%Y") %></li>
+    <li><em><%= letter.user.username %></em> sent a letter! - <%= letter.date_sent.strftime("%m/%d/%Y") %></li>
   <% end %>
 <% end %>
 </ul>

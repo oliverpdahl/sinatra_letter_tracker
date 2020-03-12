@@ -1,12 +1,13 @@
-<h1>Your Letters</h1>
+<b><a href='/'>Home</a></b><br>
+<h1>Your Letters</h1><br>
 <ul>
   <% @user.letters.each do |letter| %>
     <li><bold><a href='/letters/<%= letter.id %>'>Letter to <%= letter.recipient.name %></a></bold>
       <ul>
-        <li>Notes: <%= letter.notes %></li>
+        <br><li><strong>Notes:</strong> <%= letter.notes %></li></br>
         <li><%= letter.sent? ? letter.date_sent.strftime("Sent on %A, %B %e, %Y") : "Not yet sent" %></li>
         <li><%= letter.received? ? letter.date_received.strftime("Recieved on %A, %B %e, %Y") : "Not yet received" %></li>
       </ul>
-    </li>
+    </li><br><br>
   <% end %>
 <ul>

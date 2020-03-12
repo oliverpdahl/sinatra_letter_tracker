@@ -1,11 +1,11 @@
 <h1>Edit Letter</h1>
 <h2>Existing Information</h2>
 <ul>
-  <li>Sent to <%= @letter.recipient.name %> on <%= @letter.recipient.address %></li>
+  <li>Sent to <%= @letter.recipient.name %> at <%= @letter.recipient.address %></li><br>
   <li><%= @letter.date_sent_string %></li>
-  <li><%= @letter.date_received_string %></li>
+  <li><%= @letter.date_received_string %></li><br>
   <li>Notes: <%= @letter.notes %></li>
-</ul>
+</ul><br>
 <h2>New Information</h2>
 <form action='/letters/<%= @letter.id %>/edit' method="post">
   <input type="hidden" id="hidden" name="_method" value="PATCH">

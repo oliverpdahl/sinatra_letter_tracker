@@ -1,13 +1,14 @@
+<b><a href='/'>Home</a></b><br><br>
 <ul>
-  <li>Sent to <%= @letter.recipient.name %> on <%= @letter.recipient.address %></li>
+  <li>Sent to <%= @letter.recipient.name %> at <%= @letter.recipient.address %></li><br>
   <li><%= @letter.date_sent_string %></li>
-  <li><%= @letter.date_received_string %></li>
+  <li><%= @letter.date_received_string %></li><br>
   <li>Notes: <%= @letter.notes %></li>
-</ul>
+</ul><br>
+<form action='/letters/<%= @letter.id %>/edit' method="get">
+  <input type='submit' id="Edit Letter" name="Edit Letter" value="Edit Letter">
+</form><br>
 <form method="post" action="/letters/<%=@letter.id%>/delete">
   <input id="hidden" type="hidden" name="_method" value="DELETE">
   <input type="submit" value="Delete Letter">
-</form>
-<form action='/letters/<%= @letter.id %>/edit' method="get">
-  <input type='submit' id="Edit Letter" name="Edit Letter" value="Edit Letter">
 </form>
