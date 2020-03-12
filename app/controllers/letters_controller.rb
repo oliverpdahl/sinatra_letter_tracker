@@ -3,9 +3,9 @@ class LettersController < ApplicationController
   # GET: /letters
   get "/letters" do
     if logged_in?
-      #show tweets
+      #show letters
       @all = current_user.letters
-      erb :"/letters/index.html"
+      erb :"/letters/index"
     else
       #ask to login
       flash[:message] = "Must be loged in to view letters"
@@ -17,7 +17,7 @@ class LettersController < ApplicationController
   get "/letters/new" do
     if logged_in?
       @user = current_user
-      erb :"/letters/new.html"
+      erb :"/letters/new"
     else
       redirect '/login'
     end
@@ -45,7 +45,7 @@ class LettersController < ApplicationController
   get "/letters/:id" do
     if logged_in?
       @letter = Letter.find(params[:id])
-      erb :"/letters/show.html"
+      erb :"/letters/show"
     else
       redirect '/login'
     end
@@ -56,9 +56,9 @@ class LettersController < ApplicationController
     @letter = Letter.find(params[:id])
     @user = @letter.user
     if logged_in? && current_user == @letter.user
-      erb :"/letters/edit.html"
+      erb :"/letters/edit"
     elsif logged_in?
-      flash[:message] = "You can only edit you own tweets"
+      flash[:message] = "You can only edit you own letters"
        redirect '/letters'
     else
       redirect '/login'
@@ -66,7 +66,7 @@ class LettersController < ApplicationController
   end
 
   # PATCH: /letters/5
-  patch "/letters/:id" do
+  post "/letters/:id/edit" do
     if !!(@letter = Letter.find(params[:id])) && params[:content].empty? #UPDATE
       if recipient_filled?
         @letter = Letter.update(params[:letter]) #update
@@ -89,16 +89,29 @@ class LettersController < ApplicationController
   end
 
   # DELETE: /letters/5/delete
-  post "/letters/:id/delete" do
-    @letter = Letter.find(params[:id])
-    if @letter && logged_in? && current_user == @letter.user
-      @letter.delete
-      redirect '/letters'
+  post '/letters/:id/delete' do
+    if logged_in?
+      @letter = Letter.find_by_id(params[:id])
+      if @letter && @letter.user == current_user
+        @letter.delete
+      end
+      flash[:message] = "Letter successfuly deleted"
+      redirect to "/users/#{current_user.slug}"
     else
-      flash[:message] = "Can't delete other users letters"
-      redirect "/letters/"
+      flash[:message] = "Must be logged in to delete letters"
+      redirect to '/login'
     end
   end
+  # delete "/letters/:id" do
+  #   @letter = Letter.find(params[:id])
+  #   if @letter && logged_in? && current_user == @letter.user
+  #     @letter.delete
+  #     redirect '/letters'
+  #   else
+  #     flash[:message] = "Can't delete other users letters"
+  #     redirect "/letters"
+  #   end
+  # end
 
   helpers do
     def recipient_filled?
