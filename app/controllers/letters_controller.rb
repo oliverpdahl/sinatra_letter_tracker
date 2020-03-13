@@ -28,7 +28,7 @@ class LettersController < ApplicationController
     if recipient_filled?
       @letter = Letter.create(params[:letter]) #update
       if new_recipient?
-        @letter.recipient = Recipient.create(params[:recipient][:name], address: params[:recipient][:address])
+        @letter.recipient = Recipient.create(name: params[:recipient][:name], address: params[:recipient][:address])
         current_user.recipients << @letter.recipient
         @letter.save
         current_user.save
@@ -118,7 +118,7 @@ class LettersController < ApplicationController
        exisiting_recipient? || new_recipient?
     end
     def exisiting_recipient?
-      !params[:letter][:recipient_id].empty?
+      !!(recipient_id = params[:letter][:recipient_id]) ? !recipient_id.empty? : false
     end
     def new_recipient?
       !params[:recipient][:name].empty? && !params[:recipient][:address].empty?
