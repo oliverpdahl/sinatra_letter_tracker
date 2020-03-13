@@ -1,19 +1,15 @@
 class LettersController < ApplicationController
 
-  # GET: /letters
   get "/letters" do
     if logged_in?
-      #show letters
       @all = current_user.letters
       erb :"/letters/index"
     else
-      #ask to login
       flash[:message] = "Must be loged in to view letters"
       redirect '/login'
     end
   end
 
-  # GET: /letters/new
   get "/letters/new" do
     if logged_in?
       @user = current_user
@@ -23,7 +19,6 @@ class LettersController < ApplicationController
     end
   end
 
-  # POST: /letters
   post "/letters" do
     if recipient_filled?
       @letter = Letter.create(params[:letter]) #update
@@ -41,7 +36,6 @@ class LettersController < ApplicationController
     end
   end
 
-  # GET: /letters/5
   get "/letters/:id" do
     if logged_in?
       @letter = Letter.find(params[:id])
@@ -51,7 +45,6 @@ class LettersController < ApplicationController
     end
   end
 
-  # GET: /letters/5/edit
   get "/letters/:id/edit" do
     @letter = Letter.find(params[:id])
     @user = @letter.user
@@ -65,7 +58,6 @@ class LettersController < ApplicationController
     end
   end
 
-  # PATCH: /letters/5
   post "/letters/:id/edit" do
     if !!(@letter = Letter.find(params[:id]))
       if recipient_filled?
@@ -88,7 +80,6 @@ class LettersController < ApplicationController
     end
   end
 
-  # DELETE: /letters/5/delete
   post '/letters/:id/delete' do
     if logged_in?
       @letter = Letter.find_by_id(params[:id])
@@ -102,16 +93,6 @@ class LettersController < ApplicationController
       redirect to '/login'
     end
   end
-  # delete "/letters/:id" do
-  #   @letter = Letter.find(params[:id])
-  #   if @letter && logged_in? && current_user == @letter.user
-  #     @letter.delete
-  #     redirect '/letters'
-  #   else
-  #     flash[:message] = "Can't delete other users letters"
-  #     redirect "/letters"
-  #   end
-  # end
 
   helpers do
     def recipient_filled?

@@ -9,7 +9,7 @@
 <h2>Timeline</h2>
 <ul>
 <% @letters.each do |letter| %>
-  <% if letter.sent? %>
+  <% if letter.sent? && !!(letter.user) %>
     <li><em><%= letter.user.username %></em> sent a letter! - <%= letter.date_sent.strftime("%m/%d/%Y") %></li>
   <% end %>
 <% end %>

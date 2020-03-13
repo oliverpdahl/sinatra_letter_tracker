@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
 
-  # GET: /users/new
   get "/signup" do
     if logged_in?
       flash[:message] = "Already logged in"
@@ -10,7 +9,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST: /users
   post "/signup" do
     if fields_filled?
       if !!(User.find_by(username: params[:username]))
@@ -27,7 +25,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # GET: /users/new
   get "/login" do
     if logged_in?
       flash[:message] = "Already logged in"
@@ -37,7 +34,6 @@ class UsersController < ApplicationController
     end
   end
 
-  # POST: /users
   post "/login" do
     if fields_filled?
       @user = User.find_by(username: params[:username])
@@ -61,7 +57,6 @@ class UsersController < ApplicationController
     redirect '/'
   end
 
-  # GET: /users/5
   get "/users/:slug" do
     @user = User.find_by_slug(params[:slug])
     if logged_in? && current_user == @user
@@ -74,19 +69,4 @@ class UsersController < ApplicationController
       redirect '/login'
     end
   end
-
-  # # GET: /users/5/edit
-  # get "/users/:id/edit" do
-  #   erb :"/users/edit.html"
-  # end
-  #
-  # # PATCH: /users/5
-  # patch "/users/:id" do
-  #   redirect "/users/:id"
-  # end
-  #
-  # # DELETE: /users/5/delete
-  # delete "/users/:id/delete" do
-  #   redirect "/users"
-  # end
 end
